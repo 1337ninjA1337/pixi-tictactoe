@@ -1,5 +1,5 @@
 ```
-https://github.com/1337ninjA1337/pixi-tictactoe.git
+git clone https://github.com/1337ninjA1337/pixi-tictactoe.git
 ```
 
 
