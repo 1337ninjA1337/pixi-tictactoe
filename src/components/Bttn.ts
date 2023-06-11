@@ -78,7 +78,6 @@ export default class Bttn extends PIXI.Sprite {
     }
    
     makeMove(player: Player){ 
-        console.log(player);
                
         if(player.isMyMove) {
             this.isMoveAvailable = false;
