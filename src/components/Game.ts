@@ -40,26 +40,29 @@ export default class Game extends PIXI.Container {
 
     chooseSide() {
         if(this instanceof Bttn) {
-            if (this.options.content.includes('cross') ) {
-                this.player.figure = 'cross';
-                this.player.isMyMove = true;
-                this.AI.figure = 'circle';
-                this.player.isMyMove = false;
-            } else  {
-                this.player.figure = 'circle';
-                this.player.isMyMove = false;
-                this.AI.figure = 'cross';
-                this.AI.isMyMove = true;
-            }
+            let playerFig = '';
+            let AIFig = '';            
             
-            this.player = new Player(this.player.figure);
-            const field = new Field(this.player, this.Game, this.AI);
+            this.Game.player = new Player(playerFig);
+            this.Game.AI = new Player(AIFig)
+
+            if (this.options.content.includes('cross') ) {                
+                this.Game.player.figure = 'cross';
+                this.Game.player.isMyMove = true;
+                this.Game.AI.figure = 'circle';
+            } else  {
+                this.Game.player.figure = 'circle';
+                this.Game.AI.figure = 'cross';
+                this.Game.AI.isMyMove = true;
+            }
+
+            const field = new Field(this.Game);
             field.x = 80;
             field.y = 100;
                         
             const resetBttn = new Bttn({width: 250, height: 50, fontSize: 30, alpha: 1, hexColor: "0xffffff",  func: ()=>{if(this instanceof Bttn) {
                 this.Game.isGameEnded = false;
-                this.Game.removeChildren();
+                this.Game.removeChildren();                
                 this.Game.addChooseSideBttns();
             }}, content: 'Reset game', fontName: 'darkFont'}, this.AI, this.player, this);
             resetBttn.x = 195;

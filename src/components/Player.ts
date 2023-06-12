@@ -8,14 +8,13 @@ export default class Player extends PIXI.Container {
     curCombanation: Array<number>;
     isMyMove: boolean
 
-    constructor(figure: string, isMyMove?: boolean) {
+    constructor(figure: string) {
         super();
         
-
         this.figure = figure;
+        this.isMyMove = false;
         this.newTexture = PIXI.Texture.EMPTY;
         this.curCombanation = [];
-        
     }
 
     update() {

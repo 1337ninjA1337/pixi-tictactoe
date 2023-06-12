@@ -77,9 +77,9 @@ export default class Bttn extends PIXI.Sprite {
         this.on('click', this.callback)
     }
    
-    makeMove(player: Player){ 
-               
+    makeMove(player: Player){                        
         if(player.isMyMove) {
+            player.isMyMove = false;
             this.isMoveAvailable = false;
             for (let index in this.parent.children) {            
                 if(this.parent.children[index] === this) {
@@ -100,6 +100,7 @@ export default class Bttn extends PIXI.Sprite {
     }
 
     checkWin(player: Player){
+        
         const winCombinations: Array<Array<number>> = [
             [0,1,2],
             [3,4,5],
@@ -118,38 +119,42 @@ export default class Bttn extends PIXI.Sprite {
                 }
             }
         }        
+        let winComb = compareArrays(winCombinations, player.curCombanation);
 
-        if (compareArrays(winCombinations, player.curCombanation)) {
+        if (winComb) {
             this.Game.isGameEnded = true;
 
             let winText = new PIXI.BitmapText(`${player.figure} wins`, {
                 fontName: this.options.fontName,
                 fontSize: this.options.fontSize,
                 align: 'center'
-            })
+            });
 
             winText.y = -120;
-            
-            this.parent.parent.addChild(winText)
-           
-            this.parent.children.forEach((el, index)=> {                
-                if (el instanceof Bttn && player.curCombanation.includes(index)) {
-                    el.addChildAt(PIXI.Sprite.from('../assets/images/win_highlight.png'), 0);
+
+            this.parent.children.forEach((el, index) => {
+                if(winComb.includes(index) && el instanceof Bttn) {
+                    el.addChildAt(PIXI.Sprite.from('../assets/images/win_highlight.png'), 0)
                 }
             })
-        } else this.aiMove();
+            
+            this.parent.parent.addChild(winText);
+        } else {
+            this.player === player ? this.AI.isMyMove = true : this.player.isMyMove = true;
+            this.aiMove()
+        }
+        
     }
 
     aiMove(){
-        let availableBttns = this.parent.children.map(el => {
-            if (el instanceof Bttn && el.isMoveAvailable) {
-               return el;
-            }
-        }).filter((el) => el);
-        
-        this.AI.isMyMove = false;
-        this.player.isMyMove = true;
-        availableBttns[Math.floor(Math.random()*availableBttns.length)]?.makeMove(this.AI);
-        
+        if (this.AI.isMyMove) {
+            let availableBttns = this.parent.children.map(el => {
+                if (el instanceof Bttn && el.isMoveAvailable) {
+                return el;
+                }
+            }).filter((el) => el);  
+
+            availableBttns[Math.floor(Math.random()*availableBttns.length)].makeMove(this.AI);
+        }
     }
 }
