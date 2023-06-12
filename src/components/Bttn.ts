@@ -98,21 +98,11 @@ export default class Bttn extends PIXI.Sprite {
                 this.addChild(anim)
               
                 if (anim.state.hasAnimation('draw')) {
-                  // run forever, little boy!
                   anim.state.setAnimation(0, 'draw', false);
-                  // dont run too fast
                   anim.state.timeScale = 3;
-                  // update yourself
                   anim.autoUpdate = true;
               }
               })
-
-            // let figure = PIXI.Sprite.from(player.newTexture);
-            // figure.anchor.set(0.5);
-            // figure.x = this.options.width / 2;
-            // figure.y = this.options.height / 2;
-    
-            // this.addChild(figure);
             
             this.checkWin(player);
         }
@@ -160,7 +150,7 @@ export default class Bttn extends PIXI.Sprite {
             this.parent.parent.addChild(winText);
         } else {
             this.player === player ? this.AI.isMyMove = true : this.player.isMyMove = true;
-            this.aiMove()
+            this.aiMove();
         }
         
     }
