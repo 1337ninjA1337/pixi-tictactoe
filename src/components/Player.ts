@@ -4,7 +4,7 @@ import { Loader } from "resource-loader";
 
 export default class Player extends PIXI.Container {
     figure: string;
-    newTexture: PIXI.Texture;
+    newTexture: string;
     curCombanation: Array<number>;
     isMyMove: boolean
 
@@ -13,15 +13,13 @@ export default class Player extends PIXI.Container {
         
         this.figure = figure;
         this.isMyMove = false;
-        this.newTexture = PIXI.Texture.EMPTY;
+        this.newTexture = '';
         this.curCombanation = [];
     }
 
     update() {
-        let fig = this.figure === 'cross' ? '../assets/images/line1.png' : '../assets/images/circle.png';
-        this.newTexture = PIXI.Texture.from(fig);
+        this.newTexture = this.figure === 'cross' ? 'cross' : 'circle';
 
         this.curCombanation.sort();
-
     }
 }

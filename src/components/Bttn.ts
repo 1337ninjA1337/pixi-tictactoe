@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Loader } from "resource-loader";
 import Player from './Player';
 import Game from './Game';
+import { Spine } from 'pixi-spine';
 
 export default class Bttn extends PIXI.Sprite {
     callback: ()=>void;
@@ -88,12 +89,30 @@ export default class Bttn extends PIXI.Sprite {
              }
             player.update();
             
-            let figure = PIXI.Sprite.from(player.newTexture);
-            figure.anchor.set(0.5);
-            figure.x = this.options.width / 2;
-            figure.y = this.options.height / 2;
+            PIXI.Assets.load(`./assets/export_spine/${player.newTexture}.json`).then(res=>{
+                console.log(res);
+                let anim = new Spine(res.spineData);
+                anim.x = Math.abs(res.spineData.x) + 35;
+                anim.y = Math.abs(res.spineData.y) + 35;
+
+                this.addChild(anim)
+              
+                if (anim.state.hasAnimation('draw')) {
+                  // run forever, little boy!
+                  anim.state.setAnimation(0, 'draw', false);
+                  // dont run too fast
+                  anim.state.timeScale = 3;
+                  // update yourself
+                  anim.autoUpdate = true;
+              }
+              })
+
+            // let figure = PIXI.Sprite.from(player.newTexture);
+            // figure.anchor.set(0.5);
+            // figure.x = this.options.width / 2;
+            // figure.y = this.options.height / 2;
     
-            this.addChild(figure);
+            // this.addChild(figure);
             
             this.checkWin(player);
         }

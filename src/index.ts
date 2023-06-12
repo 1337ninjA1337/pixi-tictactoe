@@ -1,5 +1,7 @@
 import * as PIXI from "pixi.js";
 import Game from "./components/Game";
+import { Spine } from 'pixi-spine';
+import { Loader } from "resource-loader";
 
 const app = new PIXI.Application<HTMLCanvasElement>({
   antialias: true,
@@ -20,4 +22,3 @@ app.stage.addChild(bg);
 
 const game = new Game(app);
 app.stage.addChild(game);
-
