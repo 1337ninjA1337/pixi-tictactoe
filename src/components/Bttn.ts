@@ -45,7 +45,8 @@ export default class Bttn extends PIXI.Sprite {
                 const loader = new Loader();
             
                 loader.add('darkFont', '../assets/fonts/darkFont.fnt')
-                      .add('darkFontpng', '../assets/fonts/lightFont.fnt')
+                      .add('darkFontpng', '../assets/fonts/darkFont.png')
+                      .add('lightFontpng', '../assets/fonts/lightFont.png')
                       .add('lightFont', '../assets/fonts/lightFont.fnt').load((loader, resources)=>{
                     
                     let font =  PIXI.XMLFormat.parse(new DOMParser().parseFromString(resources.darkFont.data, 'text/xml'));
