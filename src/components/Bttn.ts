@@ -90,7 +90,6 @@ export default class Bttn extends PIXI.Sprite {
             player.update();
             
             PIXI.Assets.load(`./assets/export_spine/${player.newTexture}.json`).then(res=>{
-                console.log(res);
                 let anim = new Spine(res.spineData);
                 anim.x = Math.abs(res.spineData.x) + 35;
                 anim.y = Math.abs(res.spineData.y) + 35;
